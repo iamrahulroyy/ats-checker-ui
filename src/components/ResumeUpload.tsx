@@ -50,7 +50,7 @@ export default function ResumeUpload() {
 
         try {
             // Updated URL format
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload_resume/`, {
                 method: "POST",
                 body: formData,
             })

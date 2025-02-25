@@ -1,8 +1,8 @@
 "use client"
-
 import { useState, useEffect } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { FileText, ExternalLink } from "lucide-react"
+import { motion } from "framer-motion"
 
 interface Resume {
   id: number
@@ -31,39 +31,47 @@ export default function ResumeList() {
   }, [])
 
   return (
-    <div className="max-h-[400px] overflow-auto px-1">
-      <Table>
+    <div className="max-h-[400px] overflow-auto">
+      <Table className="w-full">
         <TableHeader>
-          <TableRow className="border-slate-800 bg-slate-800/30">
-            <TableHead className="text-slate-400">
-              <div className="flex items-center space-x-2">
+          <TableRow className="border-white/10 bg-[#0f172a]/95 sticky top-0">
+            <TableHead className="text-foreground/80">
+              <div className="flex items-center gap-2">
                 <FileText className="w-4 h-4" />
                 <span>Filename</span>
               </div>
             </TableHead>
-            <TableHead className="text-slate-400">Size</TableHead>
-            <TableHead className="text-slate-400 text-right">Actions</TableHead>
+            <TableHead className="text-foreground/80">Size</TableHead>
+            <TableHead className="text-foreground/80 text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {resumes.map((resume) => (
-            <TableRow key={resume.id} className="border-slate-800/50 hover:bg-slate-800/30 transition-colors">
-              <TableCell className="text-slate-300 py-3">{resume.filename}</TableCell>
-              <TableCell className="text-slate-300 py-3">
+          {resumes.map((resume, index) => (
+            <motion.tr
+              key={resume.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="border-white/10 hover:bg-white/[0.02]"
+            >
+              <TableCell className="text-white/90 font-medium">
+                {resume.filename}
+              </TableCell>
+              <TableCell className="text-white/70">
                 {(resume.file_size / 1024).toFixed(2)} KB
               </TableCell>
-              <TableCell className="text-right py-3">
+              <TableCell className="text-right">
                 <a
                   href={`${process.env.NEXT_PUBLIC_API_URL}/${resume.file_url}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
+                  className="inline-flex items-center text-[#60A5FA] hover:text-[#38BDF8] transition-colors"
                 >
                   View
                   <ExternalLink className="w-4 h-4 ml-1" />
                 </a>
               </TableCell>
-            </TableRow>
+            </motion.tr>
           ))}
         </TableBody>
       </Table>

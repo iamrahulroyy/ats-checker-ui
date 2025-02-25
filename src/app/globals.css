@@ -2,120 +2,119 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-@layer base {
-  :root {
-
-    --background: 0 0% 100%;
-
-    --foreground: 0 0% 3.9%;
-
-    --card: 0 0% 100%;
-
-    --card-foreground: 0 0% 3.9%;
-
-    --popover: 0 0% 100%;
-
-    --popover-foreground: 0 0% 3.9%;
-
-    --primary: 0 0% 9%;
-
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 0 0% 96.1%;
-
-    --secondary-foreground: 0 0% 9%;
-
-    --muted: 0 0% 96.1%;
-
-    --muted-foreground: 0 0% 45.1%;
-
-    --accent: 0 0% 96.1%;
-
-    --accent-foreground: 0 0% 9%;
-
-    --destructive: 0 84.2% 60.2%;
-
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-
-    --input: 0 0% 89.8%;
-
-    --ring: 0 0% 3.9%;
-
-    --chart-1: 12 76% 61%;
-
-    --chart-2: 173 58% 39%;
-
-    --chart-3: 197 37% 24%;
-
-    --chart-4: 43 74% 66%;
-
-    --chart-5: 27 87% 67%;
-
-    --radius: 0.5rem
-  }
-  .dark {
-
-    --background: 0 0% 3.9%;
-
-    --foreground: 0 0% 98%;
-
-    --card: 0 0% 3.9%;
-
-    --card-foreground: 0 0% 98%;
-
-    --popover: 0 0% 3.9%;
-
-    --popover-foreground: 0 0% 98%;
-
-    --primary: 0 0% 98%;
-
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 14.9%;
-
-    --input: 0 0% 14.9%;
-
-    --ring: 0 0% 83.1%;
-
-    --chart-1: 220 70% 50%;
-
-    --chart-2: 160 60% 45%;
-
-    --chart-3: 30 80% 55%;
-
-    --chart-4: 280 65% 60%;
-
-    --chart-5: 340 75% 55%
-  }
+:root {
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
+  --card: 224 71% 4%;
+  --card-foreground: 213 31% 91%;
+  --popover: 224 71% 4%;
+  --popover-foreground: 213 31% 91%;
+  --primary: 189 94% 43%;
+  --primary-foreground: 224 71% 4%;
+  --secondary: 222 47% 11%;
+  --secondary-foreground: 213 31% 91%;
+  --muted: 223 47% 11%;
+  --muted-foreground: 215.4 16.3% 56.9%;
+  --accent: 223 47% 11%;
+  --accent-foreground: 213 31% 91%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 216 34% 17%;
+  --input: 216 34% 17%;
+  --ring: 189 94% 43%;
+  --radius: 1rem;
 }
-
-
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(
+      circle at center,
+      rgba(29, 35, 42, 0.8) 0%,
+      rgba(15, 23, 42, 1) 100%
+    );
   }
+}
+
+.glass-card {
+  @apply bg-white/[0.03] backdrop-blur-lg border border-white/[0.05] shadow-xl;
+}
+
+.glass-input {
+  @apply bg-white/[0.03] border-white/[0.05] focus:border-primary/50 focus:ring-primary/20;
+}
+
+.gradient-text {
+  @apply bg-gradient-to-r from-[#60A5FA] via-[#5EEAD4] to-[#38BDF8] bg-clip-text text-transparent;
+}
+
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(45deg, #60A5FA, #5EEAD4, #38BDF8);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none; /* Add this */
+  z-index: -1;
+}
+
+.progress-gradient {
+  @apply bg-gradient-to-r from-[#60A5FA] via-[#5EEAD4] to-[#38BDF8];
+}
+
+/* File input styling */
+.file-input-container {
+  @apply relative w-full;
+}
+
+.glass-input[type="file"] {
+  @apply w-full h-14 bg-white/[0.03] border-white/[0.05] 
+    focus:border-primary/50 focus:ring-primary/20 rounded-xl;
+  color: transparent; /* Hide default filename */
+}
+
+.glass-input[type="file"]::file-selector-button {
+  @apply bg-[#60A5FA] text-white border-0 h-full px-6
+    hover:bg-[#38BDF8] transition-colors duration-200
+    absolute left-0 top-0;
+  width: 140px;
+}
+
+.file-name-display {
+  @apply absolute inset-y-0 left-[160px] right-4 
+    flex items-center text-white 
+    truncate pointer-events-none;  /* This prevents interaction */
+}
+
+.file-placeholder {
+  @apply absolute inset-y-0 left-[160px] right-4 
+    flex items-center text-zinc-400 
+    pointer-events-none;  /* This prevents interaction */
+}
+
+/* Add these new dialog styles */
+[role="dialog"] {
+  @apply overflow-hidden;
+}
+
+[role="dialog"] > div {
+  @apply overflow-hidden;
+  height: auto !important;
+  max-height: 90vh;
 }

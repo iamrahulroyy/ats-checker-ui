@@ -49,21 +49,19 @@ export default function ResumeUpload() {
         formData.append("file", file)
 
         try {
-            const url = new URL("/upload_resume", process.env.NEXT_PUBLIC_API_URL).toString()
-            console.log("Submitting to:", url)
-
-            const response = await fetch(url, {
+            // Updated URL format
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/resumes/`, {
                 method: "POST",
                 body: formData,
             })
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`)
             }
-
+    
             const data = await response.json()
             console.log("Response data:", data)
-
+            
             setAtsResponse(data)
             setShowResults(true)
             toast({
@@ -81,7 +79,6 @@ export default function ResumeUpload() {
             setLoading(false)
         }
     }
-
     return (
         <div className="min-h-screen p-6 flex items-center justify-center">
             <motion.div
